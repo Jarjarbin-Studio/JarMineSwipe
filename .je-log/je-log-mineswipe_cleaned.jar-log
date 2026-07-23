@@ -1,0 +1,20 @@
+   date          time      | [TYPE]  title      | detail
+
+---START---
+>>> '#############################'
+>>> '###     JarEngine Log     ###'
+>>> '#############################'
+2026-07-23 23:43:34.017184 | [INFO]  ENGINE     | JarEngine version 1.9.1 initialized
+2026-07-23 23:43:34.017217 | [INFO]  ENGINE     | Current session: 835a3dfce901481582fa0a2c0f6a90cf
+2026-07-23 23:43:34.017480 | [DEBUG] OBJECT     | Created: JEContainer [x7], JEInternResources, JEClock [x2], JEInput, JEGame, JEInternWindowSettings, JEWindow
+2026-07-23 23:43:34.112524 | [DEBUG] ENGINE     | JEGame: Window added
+2026-07-23 23:43:34.112756 | [DEBUG] OBJECT     | Created: JEContainer [x2], JEInternOwnership
+2026-07-23 23:43:34.113085 | [DEBUG] ENGINE     | JEGame: System added
+2026-07-23 23:43:34.113134 | [DEBUG] OBJECT     | Created: JEInternSystems, JERenderSystem, JEContainer [x7621], JEInternOwnership [x3600], JEInternGraphic [x3600], JEInternGraphicalObject [x400], JEInternEntityComponent [x3200], JEInternEmptyComponent [x400], JEEntity [x400], JEPositionComponent [x400], JESizeComponent [x400], JERotationComponent [x400], JELayerComponent [x400], JEVisibilityComponent [x400], JEWidget [x400], JEOutlineComponent [x400], JEButton [x400], JEMouseCodeGroup [x400], JEMouseWatcher [x400]
+2026-07-23 23:43:34.773902 | [DEBUG] SYSTEM     | JERenderSystem: Cache sorted
+2026-07-23 23:43:34.773920 | [DEBUG] SYSTEM     | JEInternSystems: Cache refreshed
+2026-07-23 23:43:34.773941 | [DEBUG] ENGINE     | JEGame: Game refreshed
+2026-07-23 23:43:45.839793 | [DEBUG] EVENT      | JEMouseWatcher: Event triggered [x2]
+2026-07-23 23:43:47.227095 | [DEBUG] ENGINE     | JEGame: Closed
+2026-07-23 23:43:47.241238 | [INFO]  ENGINE     | Engine quit
+----END----
