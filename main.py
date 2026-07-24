@@ -1,3 +1,4 @@
+from collections import deque
 from enum import Enum
 from random import randint
 from time import time
@@ -146,22 +147,30 @@ class Cell(JE.Widgets.UI.JEButton):
         if not MINES_GENERATED:
             generate_mines(self)
 
-        self.state = CellState.REVEALED
-        self.refresh()
-
         if self.mine:
+            self.state = CellState.REVEALED
+            self.refresh()
             reveal_all_mines()
             GAME_OVER = True
-            self.set_color((100, 100, 100))
             return
 
-        check_win()
+        queue = deque([self])
 
-        if self.number != 0:
-            return
+        while queue:
+            cell = queue.popleft()
 
-        for neighbor in self.get_neighbors():
-            neighbor.reveal()
+            if cell.state != CellState.HIDDEN:
+                continue
+
+            cell.state = CellState.REVEALED
+            cell.refresh()
+
+            if cell.number != 0:
+                continue
+
+            for neighbor in cell.get_neighbors():
+                if neighbor.state == CellState.HIDDEN and not neighbor.mine:
+                    queue.append(neighbor)
 
         check_win()
 
@@ -404,7 +413,7 @@ def main():
         JE.Interns.Config.get("window", "WINDOW", "height", int)
     )
     GRID_SIZE = tuple([int(n) for n in JE.Interns.Config.get("project", "MINESWIPE", "size", str).split(",")])
-    MINE_AMOUNT = JE.Interns.Config.get("project", "MINESWIPE", "mines", int)
+    MINE_AMOUNT = JE.Interns.Config.get("project", "MINESWIPE", "mines", int) or int((GRID_SIZE[0] * GRID_SIZE[1]) / 6)
     cell_size = min(
         WINDOW_SIZE.x / GRID_SIZE[0],
         WINDOW_SIZE.y / GRID_SIZE[1]
@@ -417,10 +426,10 @@ def main():
         (WINDOW_SIZE.x - CELL_SIZE.x * GRID_SIZE[0]) / 2,
         (WINDOW_SIZE.y - CELL_SIZE.y * GRID_SIZE[1]) / 2
     )
-    FONT = JE.Resources.JEFont("FontDefault", "Nasalization.otf", 20)
+    FONT = JE.Resources.JEFont("FontDefault", "Nasalization.otf", int(CELL_SIZE.x / 2))
 
-    JE.Interns.Helpers.assertion(GRID_SIZE[0] <= 20, "Configuration Invalid: y too big (<=20)", True)
-    JE.Interns.Helpers.assertion(GRID_SIZE[1] <= 20, "Configuration Invalid: y too big (<=20)", True)
+    JE.Interns.Helpers.assertion(GRID_SIZE[0] <= 40, "Configuration Invalid: y too big (<=40)", True)
+    JE.Interns.Helpers.assertion(GRID_SIZE[1] <= 40, "Configuration Invalid: y too big (<=40)", True)
     JE.Interns.Helpers.assertion(MINE_AMOUNT <= (GRID_SIZE[0] * GRID_SIZE[1]) / 3, f"Configuration Invalid: Too many mines (<={(GRID_SIZE[0] * GRID_SIZE[1]) / 3})", True)
 
     MINESWIPE = JE.Games.JEGame()
@@ -457,4 +466,4 @@ def main():
 
 
 if __name__ == "__main__":
-    JE.run(main)
+    main()
